@@ -1,7 +1,3 @@
-<%@page import="day1216.ApiExplorer"%>
-<%@page import="day1216.RssDTO"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../fragments/siteProperty.jsp" %>
@@ -13,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 
-<title>RSS Parsing</title>
+<title>jsp template</title>
 
 <script src="http://192.168.10.90/jsp_prj/common/color-modes.js"></script>
 <link href="/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -48,45 +44,6 @@
     
   } );
   
-  
-  function requestRss(url,title){
-	  
-	  if(confirm(title+" 기사를 보시겠습니까?")){
-		  $.ajax({
-			  url:url,
-			  type:"GET",
-			  dataType:"XML",
-			  error:function(xhr){
-				  alert(title+" 기사를 가져올 수 없습니다.");
-				  console.log(xhr.status);
-			  },//error
-			  success:function(xmlDoc){
-				var output="";
-				output+="<h2>"+title+"</h2>";
-				
-				var itemNodes=$(xmlDoc).find("item");
-				output+="조회 기사:<strong>"+itemNodes.length+"</strong>건<br>";
-				
-				$.each(itemNodes,function(ind,itemNode){
-					output+="<div>";
-					output+="<table>";
-					
-					output+="<tr><th>제목</th>"+$(itemNode).find("title").text()+"</th><th>작성일</th><td>"+
-					$(itemNode).find("pubDate").text()+"</td></tr><tr><th>설명</th><td=colspan='4'>"+
-					$(itemNode).find("description").text()+"</td></tr>";
-					
-					output+="</table>";
-					output+="</div>";
-					
-				});//each
-				
-				$("#output").html(output);
-
-			  }//success
-		  })//ajax
-	  }//end if
-	  
-  }
   </script>
 
 
@@ -119,43 +76,9 @@
 	
 			<hr class="featurette-divider">
 			<div class="row featurette">
-				<div>
-					<%
-		List<RssDTO>list=new ArrayList<RssDTO>();
-		list.add(new RssDTO("newsflesh","속보","newsflesh"));
-		list.add(new RssDTO("issue","이슈 Top10","issue"));
-		list.add(new RssDTO("section/politics","정치","politics"));
-		list.add(new RssDTO("section/economy","경제","economy"));
-		list.add(new RssDTO("section/society","사회","society"));
-		list.add(new RssDTO("section/international","국제","international"));
-		list.add(new RssDTO("section/culture","문화","culture"));
-		list.add(new RssDTO("section/entertainment","연예","entertainment"));
-		list.add(new RssDTO("section/sports","스포츠","sports"));
-		list.add(new RssDTO("section/weather","날씨","weather"));
-		
-		ApiExplorer ae=new ApiExplorer();
-		//cors이슈로 인하여 rss를 자바에서 읽어들여 xml파일로 생성
-		//뉴스의 전처리
-		for(RssDTO rDTO:list){
-			ae.createRss(rDTO.getUrl(), rDTO.getEngTitle());
-		}
-		
-	String commonURL="https://localhost/jsp_prj";		
-		pageContext.setAttribute("rssList", list);
-		pageContext.setAttribute("commonURL", commonURL);
-				
-					%>
-					
-	<table class="table table-hover">
-	<tr>
-	<c:forEach var="news" items="${rssList }">
-	<td><a href="javascript:requestRss('${commonURL}/day1216/${news.engTitle}.xml','${news.title}')"><c:out value="${news.title}"/></a>
-	</td>
-	</c:forEach>
-	</tr>
-	</table>				
-	
-		<div id="output"></div>
+				<div class="col-md-7 order-md-2">
+					회원가입 양식
+				</div>
 				
 			</div>
 			<hr class="featurette-divider">
